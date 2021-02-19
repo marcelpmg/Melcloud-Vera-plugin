@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root xmlns="urn:schemas-upnp-org:device-1-0">
   <specVersion>
-    <major>1</major>
+	  <major>1</major>
     <minor>0</minor>
   </specVersion>
   <device>
@@ -12,8 +12,8 @@
 		<modelDescription></modelDescription>
 		<modelName></modelName>
 		<handleChildren>0</handleChildren>
-		<Category_Num>1</Category_Num>
-		<Subcategory_Num>0</Subcategory_Num>
+		<Category_Num>5</Category_Num>
+		<Subcategory_Num>1</Subcategory_Num>
 	<staticJson>D_Melcloud1.json</staticJson>
     <serviceList>
       <service>

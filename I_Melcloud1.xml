@@ -5,13 +5,15 @@
 
 </settings>
   <functions>
-     local leCode
+
     function lug_startup(lul_device) 
-      luup.log("Melanie #" .. lul_device .. " demarrage " )
-      package.loaded.L_Melcloud1 = nil
-      leCode = require("L_Melcloud1")
-      leCode.mlStartup(lul_device)
+	 luup.log("Melanie #" .. lul_device .. " demarrage " )
+      MelcloudPlugin = require("L_Melcloud1")
+	 
+      MelcloudPlugin.mlStartup(lul_device)
+	  watchHandler = MelcloudPlugin.watchHandler
 	luup.log("Melanie #" .. lul_device .. " fin de demarrage " )
+	return true
     end
 
   </functions>	
@@ -21,21 +23,21 @@
 			<serviceId>urn:upnp-org:serviceId:SwitchPower1</serviceId>
 			<name>SetTarget</name>
 			<run>
-				leCode.actionSetTarget(lul_device)
+				MelcloudPlugin.actionSetTarget(lul_device)
 			</run>
 		</action>
 		<action>
 			<serviceId>urn:upnp-org:serviceId:HVAC_UserOperatingMode1</serviceId>
 			<name>SetModeTarget</name>
 			<run>
-				leCode.SetModeTarget(lul_device, lul_settings)
+				MelcloudPlugin.SetModeTarget(lul_device, lul_settings)
 			</run>
 		</action>
 		<action>
 			<serviceId>urn:upnp-org:serviceId:TemperatureSetpoint1</serviceId>
 			<name>SetCurrentSetpoint</name>
 			<run>
-				leCode.SetPoint(lul_device, lul_settings)
+				MelcloudPlugin.SetPoint(lul_device, lul_settings)
 			</run>
 		</action>
 		<action>

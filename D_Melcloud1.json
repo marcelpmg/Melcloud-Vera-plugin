@@ -7,7 +7,7 @@
 				"variable": "ModeStatus",
 				"operator": "==",
 				"value": "Off",
-				"subcategory_num": 0
+				"subcategory_num": 1
 			}]
 		},
 		{
@@ -17,7 +17,7 @@
 				"variable": "ModeStatus",
 				"operator": "==",
 				"value": "AutoChangeOver",
-				"subcategory_num": 0
+				"subcategory_num": 1
 			}]
 		},
 		{
@@ -27,7 +27,7 @@
 				"variable": "ModeStatus",
 				"operator": "==",
 				"value": "CoolOn",
-				"subcategory_num": 0
+				"subcategory_num": 1
 			}]
 		},
 		{
@@ -37,7 +37,7 @@
 				"variable": "ModeStatus",
 				"operator": "==",
 				"value": "HeatOn",
-				"subcategory_num": 0
+				"subcategory_num": 1
 			}]
 		}
 	],
