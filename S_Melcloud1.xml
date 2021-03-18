@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!-- S_Melcloud1.xml -->
+<scpd xmlns="urn:schemas-upnp-org:service-1-0">
+	<specVersion>
+		<major>1</major>
+		<minor>0</minor>
+	</specVersion>
+	
+	<actionList>
+
+		<!-- Lance la decouvertes des appareil dans l'installation -->
+		<action>
+			<name>SetDecDevices</name>
+			<argumentList>
+				<argument>
+					<name>NewDecDevices</name>
+					<direction>in</direction>
+					<relatedStateVariable>DecDevices</relatedStateVariable>
+				</argument>
+			</argumentList>
+		</action>
+	</actionList>
+</scpd>

@@ -1,0 +1,398 @@
+{
+  "default_icon": "thermostat_device_default.png",
+  "state_icons": [
+    {
+      "img": "thermostat_mode_off.png",
+      "conditions": [
+        {
+          "service": "urn:didierco-vera:serviceId:Melcloud1",
+          "variable": "StConnexion",
+          "operator": "==",
+          "value": "0",
+          "subcategory_num": "0"
+        }
+      ]
+    },
+    {
+      "img": "thermostat_mode_auto.png",
+      "conditions": [
+        {
+          "service": "urn:didierco-vera:serviceId:Melcloud1",
+          "variable": "StConnexion",
+          "operator": "==",
+          "value": "1",
+          "subcategory_num": "0"
+        }
+      ]
+    },
+    {
+      "img": "thermostat_mode_heating.png",
+      "conditions": [
+        {
+          "service": "urn:didierco-vera:serviceId:Melcloud1",
+          "variable": "StConnexion",
+          "operator": "==",
+          "value": "2",
+          "subcategory_num": "0"
+        }
+      ]
+    }
+  ],
+  "x": "4",
+  "y": "4",
+  "inScene": "1",
+  "ToggleButton": 1,
+  "Tabs": [
+    {
+      "Label": {
+        "lang_tag": "ui7_tabname_control",
+        "text": "Control"
+      },
+      "Position": "0",
+      "TabType": "flash",
+      "top_navigation_tab": 1,
+	  "AfterInit": {
+               "ScriptName": "J_Melcloud1.js",
+				"Function": "MelCloud.maFonction"
+          } ,
+      "ControlGroup": [
+        {
+          "id": "1",
+          "scenegroup": "1"
+        }
+      ],
+      "SceneGroup": [
+        {
+          "id": "1",
+          "top": "1",
+          "left": "10",
+          "x": "2",
+          "y": "0.5"
+        }
+      ],
+      "Control": [
+        {
+          "ControlGroup": 1,
+          "ControlType": "spacer",
+          "HorizontalMultiplier": "0.7"
+        },
+		{
+          "ControlGroup": "1",
+          "ControlType": "slider",
+          "top": "0",
+          "left": "0",
+          "Label": {
+            "lang_tag": "ui7_general_ucase_on",
+            "text": ""
+          },
+          "Style": "numeric",
+          "LabelUp": {
+            "lang_tag": "fan_increase",
+            "text": "increase"
+          },
+          "LabelDown": {
+            "lang_tag": "fan_decrease",
+            "text": "decrease"
+          },
+          "LabelSymbol": {
+            "lang_tag": "heater_label_symbol",
+            "text": "<div><style type=\"text/css\">.tempx{font-family:arial;font-size:18px;color:#fe9200;}</style><div class=\"tempx\">Fan</div></div>"
+          },
+          "Display": {
+            "Service": "urn:upnp-org:serviceId:HVAC_FanOperatingMode1",
+            "Variable": "FanMode",
+           
+           "ID": "currentFan",
+         "MinValue": "0",
+            "MaxValue": "5",
+            "Step": "1",
+            "Top": 30,
+            "Left": 250,
+            "Width": 200,
+            "Height": 100
+          },
+          "Command": {
+            "Service": "urn:upnp-org:serviceId:HVAC_FanOperatingMode1",
+            "Action": "SetMode",
+              "Parameters": [
+              {
+                "Name": "NewFanMode",
+                "ID": "currentFan"
+              }
+            ]
+        
+          }
+        
+        },
+        {
+          "ControlGroup": "1",
+          "ControlType": "spinner_horizontal",
+          "top": "0",
+          "left": "0",
+          "Label": {
+            "lang_tag": "ui7_general_ucase_on",
+            "text": "On"
+          },
+          "Style": "numeric",
+          "LabelUp": {
+            "lang_tag": "temperature_increase",
+            "text": "increase"
+          },
+          "LabelDown": {
+            "lang_tag": "temperature_decrease",
+            "text": "decrease"
+          },
+          "LabelSymbol": {
+            "lang_tag": "heater_label_symbol",
+            "text": "&deg;_TEMPERATURE_FORMAT_"
+          },
+          "Display": {
+            "Service": "urn:upnp-org:serviceId:TemperatureSetpoint1",
+            "Variable": "CurrentSetpoint",
+            "MinValue": "0",
+            "MaxValue": "100",
+            "Step": "0.5",
+            "Editable": "1",
+            "InvalidInputMessage": {
+              "lang_tag": "enter_a_valid_number",
+              "text": "Enter a valid number entre 0 and 100 and using increments of 0.5"
+            },
+            "Top": 10,
+            "Left": 25,
+            "Width": 100,
+            "Height": 40
+          },
+          "Command": {
+            "Service": "urn:upnp-org:serviceId:TemperatureSetpoint1",
+            "Action": "SetCurrentSetpoint",
+            "ActionArgumentName": "NewCurrentSetpoint",
+            "Sufix": "&deg;_TEMPERATURE_FORMAT_"
+          },
+          "ControlCode": "heater_setpoint"
+        },
+				{
+				   "ControlGroup": 1,
+				   "ControlType": "spacer",
+				   "HorizontalMultiplier": "0.8"
+				},
+				{
+						"ControlGroup": "1",
+						"ControlType": "variable",
+						"top": "1",
+						"left": "0",
+						
+						"Display": {
+								"Service": "urn:upnp-org:serviceId:TemperatureSensor1",
+								"Variable": "FormatedCurrentTemp",
+								"Top": -10,
+								"Left": 135,
+								"Width": 75,
+								"Height": 20
+						}
+				},
+				{
+   "ControlGroup": 1,
+   "ControlType": "line_break"
+},
+        {
+          "ControlGroup": "1",
+          "ControlType": "button",
+          "Label": {
+            "lang_tag": "ui7_cmd_thermostat_set_mode_off",
+            "text": "Off"
+          },
+          "Display": {
+		  "Top": 90,
+            "Height": 20,
+            "ID": "new_control_value1",
+            "Left": 200,
+            "Width": 82,
+            "Service": "urn:upnp-org:serviceId:HVAC_UserOperatingMode1",
+            "Variable": "ModeStatus",
+            "Value": "Off"
+          },
+          "Command": {
+            "HumanFriendlyText": {
+              "lang_tag": "ui7_cmd_thermostat_set_mode_off",
+              "text": "Off"
+            },
+            "Service": "urn:upnp-org:serviceId:HVAC_UserOperatingMode1",
+            "Action": "SetModeTarget",
+            "Parameters": [
+              {
+                "Name": "NewModeTarget",
+                "Value": "Off"
+              }
+            ]
+          },
+          "ControlCode": "thermostat_mode_off"
+        },
+        {
+          "ControlGroup": "1",
+          "ControlType": "button",
+          "Label": {
+            "lang_tag": "ui7_cmd_thermostat_set_mode_auto",
+            "text": "Auto"
+          },
+          "Display": {
+		   "Top": 90,
+            "Height": 20,
+            "ID": "new_control_value4",
+            "Left": 15,
+            "Width": 82,
+            "Service": "urn:upnp-org:serviceId:HVAC_UserOperatingMode1",
+            "Variable": "ModeStatus",
+            "Value": "AutoChangeOver"
+          },
+          "Command": {
+            "HumanFriendlyText": {
+              "lang_tag": "ui7_cmd_thermostat_set_mode_auto",
+              "text": "Auto"
+            },
+            "Service": "urn:upnp-org:serviceId:HVAC_UserOperatingMode1",
+            "Action": "SetModeTarget",
+            "Parameters": [
+              {
+                "Name": "NewModeTarget",
+                "Value": "AutoChangeOver"
+              }
+            ]
+          },
+          "ControlCode": "thermostat_mode_auto"
+        },
+        {
+
+
+          "ControlGroup": "1",
+          "ControlType": "button",
+          "Label": {
+            "lang_tag": "ui7_cmd_thermostat_set_mode_cool_on",
+            "text": "Cool"
+          },
+          "Display": {
+		              "Top": 90,
+            "Height": 20,
+            "ID": "new_control_value3",
+            "Left": 299,
+            "Width": 82,
+            "Service": "urn:upnp-org:serviceId:HVAC_UserOperatingMode1",
+            "Variable": "ModeStatus",
+            "Value": "CoolOn"
+          },
+          "Command": {
+            "HumanFriendlyText": {
+              "lang_tag": "ui7_cmd_thermostat_set_mode_cool_on",
+              "text": "Cool"
+            },
+            "Service": "urn:upnp-org:serviceId:HVAC_UserOperatingMode1",
+            "Action": "SetModeTarget",
+            "Parameters": [
+              {
+                "Name": "NewModeTarget",
+                "Value": "CoolOn"
+              }
+            ]
+          },
+          "ControlCode": "thermostat_mode_cool"
+        },
+        {
+          "ControlGroup": "1",
+          "ControlType": "button",
+          "Label": {
+            "lang_tag": "ui7_cmd_thermostat_set_mode_heat_on",
+            "text": "Heat"
+          },
+          "Display": {
+		      "Top": 90,
+            "Height": 20,
+            "ID": "new_control_value2",
+            "Left": 106,
+            "Width": 82,
+            "Service": "urn:upnp-org:serviceId:HVAC_UserOperatingMode1",
+            "Variable": "ModeStatus",
+            "Value": "HeatOn"
+          },
+          "Command": {
+            "HumanFriendlyText": {
+              "lang_tag": "ui7_cmd_thermostat_set_mode_heat_on",
+              "text": "Heat"
+            },
+            "Service": "urn:upnp-org:serviceId:HVAC_UserOperatingMode1",
+            "Action": "SetModeTarget",
+            "Parameters": [
+              {
+                "Name": "NewModeTarget",
+                "Value": "HeatOn"
+              }
+            ]
+          },
+          "ControlCode": "thermostat_mode_heat"
+        }
+
+      ]
+    },
+    {
+      "Label": {
+        "lang_tag": "ui7_settings",
+        "text": "Settings"
+      },
+      "Position": "1",
+      "TabType": "javascript",
+      "ScriptName": "shared.js",
+      "Function": "simple_device"
+    },
+    {
+      "Label": {
+        "lang_tag": "ui7_advanced",
+        "text": "Advanced"
+      },
+      "Position": "2",
+      "TabType": "javascript",
+      "ScriptName": "shared.js",
+      "Function": "advanced_device"
+    },
+    {
+      "Label": {
+        "lang_tag": "ui7_device_options",
+        "text": "Device Options"
+      },
+      "Position": "3",
+      "TabType": "javascript",
+      "ScriptName": "shared.js",
+      "Function": "device_zwave_options"
+    },
+    {
+      "Label": {
+        "lang_tag": "ui7_logs",
+        "text": "Logs"
+      },
+      "Position": "4",
+      "TabType": "javascript",
+      "ScriptName": "shared.js",
+      "Function": "device_logs"
+    },
+    {
+      "Label": {
+        "lang_tag": "ui7_notifications",
+        "text": "Notifications"
+      },
+      "Position": "5",
+      "TabType": "javascript",
+      "ScriptName": "shared.js",
+      "Function": "device_notifications"
+    },
+    {
+      "Label": {
+        "lang_tag": "ui7_device_scenes",
+        "text": "Scenes"
+      },
+      "Position": "6",
+      "TabType": "javascript",
+      "ScriptName": "shared.js",
+      "Function": "device_scenes"
+    }
+  ],
+
+
+  "device_type": "urn:schemas-didierco-vera:device:MelcloudDev:1"
+}

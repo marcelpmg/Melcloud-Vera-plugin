@@ -5,13 +5,15 @@
 
 </settings>
   <functions>
-
+	myChildren = { }
+ 
     function lug_startup(lul_device) 
 	 luup.log("Melanie #" .. lul_device .. " demarrage " )
-      MelcloudPlugin = require("L_Melcloud1")
 	 
+      MelcloudPlugin = require("L_Melcloud1")
+	 initVariables = MelcloudPlugin.initVariables
       MelcloudPlugin.mlStartup(lul_device)
-	  watchHandler = MelcloudPlugin.watchHandler
+	--  watchHandler = MelcloudPlugin.watchHandler
 	luup.log("Melanie #" .. lul_device .. " fin de demarrage " )
 	return true
     end
@@ -20,18 +22,20 @@
   <startup>lug_startup</startup>
   <actionList>
 		<action>
-			<serviceId>urn:upnp-org:serviceId:SwitchPower1</serviceId>
-			<name>SetTarget</name>
+			<serviceId>urn:didierco-vera:serviceId:Melcloud1</serviceId>
+			<name>SetDecDevices</name>
 			<run>
-				MelcloudPlugin.actionSetTarget(lul_device)
+				MelcloudPlugin.decouverteDevices(lul_device, lul_settings)
 			</run>
+
 		</action>
 		<action>
-			<serviceId>urn:upnp-org:serviceId:HVAC_UserOperatingMode1</serviceId>
-			<name>SetModeTarget</name>
+			<serviceId>urn:upnp-org:serviceId:HVAC_FanOperatingMode1</serviceId>
+			<name>SetMode</name>
 			<run>
-				MelcloudPlugin.SetModeTarget(lul_device, lul_settings)
+				MelcloudPlugin.SetFan(lul_device, lul_settings)
 			</run>
+
 		</action>
 		<action>
 			<serviceId>urn:upnp-org:serviceId:TemperatureSetpoint1</serviceId>
@@ -41,11 +45,12 @@
 			</run>
 		</action>
 		<action>
-			<serviceId>urn:upnp-org:serviceId:TemperatureSetpoint1</serviceId>
-			<name>GetCurrentSetpoint</name>
+			<serviceId>urn:upnp-org:serviceId:HVAC_UserOperatingMode1</serviceId>
+			<name>SetModeTarget</name>
 			<run>
-
-			return true
+			
+				MelcloudPlugin.SetModeTarget(lul_device, lul_settings)
+				
 			</run>
 		</action>
 	</actionList>
