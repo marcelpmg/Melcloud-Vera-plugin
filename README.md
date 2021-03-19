@@ -1,5 +1,5 @@
 # melcloud
-Vera Device to manage a Melcloud connexion to Mitsubishi AC system
+Vera pluggin to manage a Melcloud connexion to Mitsubishi AC system
 ## Installation
 ### Download files
 Download the 9 files in Vera Ui:
