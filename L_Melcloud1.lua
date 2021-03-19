@@ -175,7 +175,7 @@ function mlStartup(lul_device)
       -- stockage du token?
       return 0
    end
-   luup.log("Melcloud #" .. lul_device .." fin du statup",2)
+   luup.log("Melcloud #" .. lul_device .." fin du startup",2)
    -- changement de couleur de l'icone en rouge
    luup.variable_set(ML_SID, "StConnexion", "2", lul_device)
    return 1
@@ -196,7 +196,7 @@ function runOnce(lul_device)
 
    Version = luup.variable_get(ML_SID, "Version", lul_device)
    if (Version == nil) then
-      luup.log("Melcloud #" .. lul_device .. " Init des variables " )
+
       -- Init variables Connexion parms
       luup.variable_set(ML_SID, "MelcloudUser", "", lul_device)
       luup.variable_set(ML_SID, "melCloudPwd", "", lul_device)
@@ -204,10 +204,6 @@ function runOnce(lul_device)
       luup.variable_set(ML_SID, "Version", "1", lul_device)
       luup.variable_set(ML_SID, "StConnexion", "0", lul_device)
       luup.variable_set(ML_SID, "DecDevices", "No", lul_device)
-
-
-      luup.log("Melcloud #" .. lul_device .. " Fin Init des variables ")
-
 
    end
 end
@@ -226,7 +222,7 @@ function login()
    rc, reponsePost =  postHttps(url,reqbody,"",1)
    if (rc) then -- return code OK
       if (reponsePost.ErrorId == 1) then -- mauvais login
-         luup.log("Melcloud #" .. myDevice .. " Credential error, user :".. s_username .."pwd:".. s_password,2)
+         luup.log("Melcloud #" .. myDevice .. " Credential error, user :".. s_username .."pwd:".. s_password,1)
          return nil
       else
 
@@ -254,7 +250,7 @@ function decouverteDevices(lul_device,lul_settings)
    if( ct == "1")then
       getDevices(lul_device,lul_settings)
    else
-      luup.log("Melcloud #" .. log_level .. "  Impossible discovering, no connexion!",2)
+      luup.log("Melcloud #" .. log_level .. "  Impossible discovering, no connexion!",1)
    end
 end
 ---------------------------
@@ -349,7 +345,7 @@ end
 initVariables = function ()
 
 for k2, v2 in pairs(myChildren) do
-   luup.log( k2 .. "=" .. tostring(v2))
+ 
    getInfosfromADevice(v2,k2)
 end
 
@@ -404,8 +400,6 @@ local result, status, respheaders, libstatus = https.request {
 status = tonumber(status)
 if status >= 200 and status < 400 then
 
-   luup.log("Melcloud #" .. myDevice .. " https OK:" .. status)
-
    return true, json.decode(table.concat(respBody))
 else
    luup.log("Melcloud #" .. myDevice .. " Erreur http:" .. status,1)
@@ -458,8 +452,6 @@ local result, status, respheaders, respstatus = https.request {
 status = tonumber(status)
 
 if status >= 200 and status < 400 then
-
-   luup.log("Melcloud #" .. myDevice .. " https OK:" .. status)
 
    return true, json.decode(table.concat(respBody))
 else
@@ -521,17 +513,13 @@ Version = luup.variable_get(ML_SID, "Version", veraDev)
 luup.variable_set(ML_SID, "StConnexion", "1", veraDev)
 -- si la variable version existe on ne fait rien les variables on deja été créées
 if (Version == nil) then
-   luup.log("Melcloud #" .. veraDev .. " Device init  " )
+ 
    -- On surveille la variable ModeTarget qui contient le mode modifié
    --luup.variable_watch('watchHandler', HA_SID, "ModeTarget", lul_device)
    -- variable générales pour SwitchPower
    luup.variable_set(SWITCHPWR_SID, "Target", "", veraDev)
    luup.variable_set(SWITCHPWR_SID, "Status", "", veraDev)
-
-
    luup.variable_set(ML_SID, "Version", "1", veraDev)
-   luup.log("Melcloud #" .. veraDev .. " Fin Device init :" .. luup.devices[veraDev].id)
-
 
 end
 
